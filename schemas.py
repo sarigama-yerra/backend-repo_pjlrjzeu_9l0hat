@@ -1,48 +1,55 @@
 """
-Database Schemas
+Database Schemas for PC Builder Simulator
 
-Define your MongoDB collection schemas here using Pydantic models.
-These schemas are used for data validation in your application.
-
-Each Pydantic model represents a collection in your database.
-Model name is converted to lowercase for the collection name:
-- User -> "user" collection
-- Product -> "product" collection
-- BlogPost -> "blogs" collection
+Each Pydantic model maps to a MongoDB collection (lowercased class name).
 """
-
+from typing import Optional, List, Dict
 from pydantic import BaseModel, Field
-from typing import Optional
 
-# Example schemas (replace with your own):
-
-class User(BaseModel):
+class Component(BaseModel):
     """
-    Users collection schema
-    Collection name: "user" (lowercase of class name)
+    PC components catalog
+    Collection: "component"
     """
-    name: str = Field(..., description="Full name")
-    email: str = Field(..., description="Email address")
-    address: str = Field(..., description="Address")
-    age: Optional[int] = Field(None, ge=0, le=120, description="Age in years")
-    is_active: bool = Field(True, description="Whether user is active")
+    name: str = Field(..., description="Display name of the component")
+    type: str = Field(..., description="Category: CPU, GPU, Motherboard, RAM, Storage, PSU, Case, Cooler")
+    brand: Optional[str] = Field(None, description="Manufacturer or brand")
+    price: float = Field(..., ge=0, description="Price in USD")
 
-class Product(BaseModel):
+    # Common technical attributes (optional, used for compatibility rules)
+    socket: Optional[str] = Field(None, description="CPU/Motherboard socket")
+    chipset: Optional[str] = Field(None, description="Motherboard chipset")
+    ram_type: Optional[str] = Field(None, description="DDR4, DDR5, etc.")
+    ram_speed: Optional[int] = Field(None, description="Max supported RAM speed in MT/s")
+    ram_slots: Optional[int] = Field(None, description="Number of RAM slots on motherboard")
+
+    tdp: Optional[int] = Field(None, description="Thermal Design Power (W)")
+    psu_wattage: Optional[int] = Field(None, description="Power Supply wattage")
+
+    form_factor: Optional[str] = Field(None, description="ATX, mATX, ITX")
+    case_gpu_max_length_mm: Optional[int] = Field(None, description="Max GPU length that case supports in mm")
+    case_cooler_max_height_mm: Optional[int] = Field(None, description="Max CPU cooler height in mm")
+    psu_type: Optional[str] = Field(None, description="ATX, SFX, etc.")
+
+    gpu_length_mm: Optional[int] = Field(None, description="GPU length in mm")
+
+    storage_interfaces: Optional[List[str]] = Field(default=None, description="List of supported storage interfaces, e.g., ['SATA', 'M.2']")
+    m2_slots: Optional[int] = Field(None, description="Number of M.2 slots on motherboard")
+    sata_ports: Optional[int] = Field(None, description="Number of SATA ports on motherboard")
+
+    cooler_tdp_rating: Optional[int] = Field(None, description="Max TDP that cooler can handle")
+    cooler_height_mm: Optional[int] = Field(None, description="Cooler height in mm")
+
+class Build(BaseModel):
     """
-    Products collection schema
-    Collection name: "product" (lowercase of class name)
+    User builds (saved configurations)
+    Collection: "build"
     """
-    title: str = Field(..., description="Product title")
-    description: Optional[str] = Field(None, description="Product description")
-    price: float = Field(..., ge=0, description="Price in dollars")
-    category: str = Field(..., description="Product category")
-    in_stock: bool = Field(True, description="Whether product is in stock")
-
-# Add your own schemas here:
-# --------------------------------------------------
-
-# Note: The Flames database viewer will automatically:
-# 1. Read these schemas from GET /schema endpoint
-# 2. Use them for document validation when creating/editing
-# 3. Handle all database operations (CRUD) directly
-# 4. You don't need to create any database endpoints!
+    name: str = Field(..., description="Name of the build")
+    selections: Dict[str, str] = Field(
+        ..., description="Mapping of component type to component _id string. e.g., {'CPU': '...', 'GPU': '...'}"
+    )
+    total_price: float = Field(..., ge=0)
+    estimated_power_w: int = Field(..., ge=0)
+    is_valid: bool = Field(...)
+    issues: List[str] = Field(default_factory=list)
