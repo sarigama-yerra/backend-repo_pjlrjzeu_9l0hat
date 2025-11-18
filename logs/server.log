@@ -1,19 +1,15 @@
 INFO:     Will watch for changes in these directories: ['/home/workspace']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [200] using StatReload
-INFO:     Started server process [202]
+INFO:     Started reloader process [247] using StatReload
+INFO:     Started server process [249]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     172.20.0.1:36844 - "HEAD / HTTP/1.1" 405 Method Not Allowed
-INFO:     172.20.0.1:36866 - "GET /api/components HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36852 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36876 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36892 - "GET /api/components HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36876 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36892 - "GET /api/components HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36892 - "GET /api/components?type=Case HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36892 - "GET /api/components?type=PSU HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36910 - "POST /api/seed HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36910 - "GET /api/components HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36910 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
-INFO:     172.20.0.1:36910 - "GET /api/components?type=Motherboard HTTP/1.1" 200 OK
+INFO:     172.20.0.1:44078 - "HEAD / HTTP/1.1" 405 Method Not Allowed
+INFO:     172.20.0.1:55708 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55718 - "GET /api/components HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55708 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55718 - "GET /api/components HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55722 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55738 - "GET /api/components HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55722 - "GET /api/components?type=CPU HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55738 - "GET /api/components HTTP/1.1" 200 OK
